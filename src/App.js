@@ -3,7 +3,7 @@ import {Provider} from "react-redux";
 import {store, history} from "./store/store";
 import {Redirect, Route} from "react-router";
 import {ConnectedRouter} from 'react-router-redux';
-import HomePage from "./components/HomePage";
+import ConnectedHomePage from "./containers/ConnectedHomePage";
 import {MuiThemeProvider} from "material-ui/styles";
 import EditPage from "./components/EditPage";
 import './App.css';
@@ -16,7 +16,7 @@ class App extends Component {
           <MuiThemeProvider>
             <div className="App">
               <Redirect from='/' to='/category/0' />
-              <Route exact path="/category/:categoryId" component={HomePage}/>
+              <Route exact path="/category/:categoryId" component={ConnectedHomePage}/>
               <Route path="/category/:categoryId/task/:taskId/edit" component={EditPage}/>
             </div>
           </MuiThemeProvider>
