@@ -7,14 +7,14 @@ import TaskList from "../TaskList/index";
 
 export default class HomePage extends Component {
   render() {
-    const {categories, tasks, categoryActions, tasksActions} = this.props;
+    const {categories, tasks, categoryActions, taskActions} = this.props;
 
     const categoryId = parseInt(this.props.match.params.categoryId);
 
     return <div className="HomePage">
       <Grid>
         <Row>
-          <Header progress={0.6}/>
+          <Header progress={0.1}/>
           {/*header*/}
           {/*<LinearProgress mode="determinate" value={80}/>*/}
         </Row>
@@ -27,7 +27,7 @@ export default class HomePage extends Component {
           </Col>
           <Col xs={6} md={8}>
             <TaskList items={tasks.items}
-                      actions={tasksActions}
+                      actions={taskActions}
                       categoryId={categoryId}
             />
           </Col>

@@ -10,7 +10,7 @@ export default class TaskList extends React.Component {
       {
         items.filter(x => x.category === this.props.categoryId).map(x => (
           <div className="TaskList-item" key={x.id}>
-            <Checkbox checked={x.done} style={{display: "inline"}}/>
+            <Checkbox checked={x.done} onChange={() => actions.toggle(x.id)}/>
             {x.title}
             <Button bsSize="xsmall" onClick={() => this.onEdit(x.id)}>
               <Glyphicon glyph="edit"/>

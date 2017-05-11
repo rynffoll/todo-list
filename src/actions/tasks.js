@@ -1,4 +1,4 @@
-import {TASK_ADD, TASK_DONE, TASK_MOVE} from "./constants";
+import {TASK_ADD, TASK_TOGGLE, TASK_MOVE} from "./constants";
 
 export function add(category, title) {
   return {
@@ -8,9 +8,9 @@ export function add(category, title) {
   }
 }
 
-export function done(id) {
+export function toggle(id) {
   return {
-    type: TASK_DONE,
+    type: TASK_TOGGLE,
     id
   }
 }
