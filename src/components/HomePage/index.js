@@ -1,13 +1,16 @@
 import React, {Component} from 'react';
-import ConnectedCategoryTree from "../../containers/ConnectedCategoryTree/index";
-import ConnectedTaskList from "../../containers/ConnectedTaskList/index";
+import PropTypes from 'prop-types';
 import Header from "../Header/index";
-import EditTask from "../EditTask/index";
 import {Col, Grid, Row} from "react-bootstrap";
+import CategoryTree from "../CategoryTree";
+import TaskList from "../TaskList/index";
 
 export default class HomePage extends Component {
   render() {
+    const {categories, tasks, categoryActions, tasksActions} = this.props;
+
     const categoryId = parseInt(this.props.match.params.categoryId);
+
     return <div className="HomePage">
       <Grid>
         <Row>
@@ -17,13 +20,25 @@ export default class HomePage extends Component {
         </Row>
         <Row>
           <Col xs={6} md={4}>
-            <ConnectedCategoryTree />
+            <CategoryTree roots={categories.roots}
+                          items={categories.items}
+                          actions={categoryActions}
+            />
           </Col>
           <Col xs={6} md={8}>
-            <ConnectedTaskList categoryId={categoryId}/>
+            <TaskList items={tasks.items}
+                      actions={tasksActions}
+                      categoryId={categoryId}
+            />
           </Col>
         </Row>
       </Grid>
     </div>
   }
 }
+
+HomePage.propTypes = {
+  categories: PropTypes.object,
+  tasks: PropTypes.object,
+  actions: PropTypes.object,
+};

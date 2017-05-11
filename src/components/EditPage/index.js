@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import ConnectedCategoryTree from "../../containers/ConnectedCategoryTree/index";
 import {Card, Grid} from "material-ui";
-import ConnectedTaskList from "../../containers/ConnectedTaskList/index";
-import Header from "../Header/index";
+import TaskList from "../TaskList";
+import CategoryTree from "../CategoryTree";
 
 export default class EditPage extends Component {
   render() {
@@ -15,12 +14,12 @@ export default class EditPage extends Component {
         </Grid>
         <Grid item xs={8} sm={4}>
           <Card>
-            <ConnectedCategoryTree />
+            <CategoryTree />
           </Card>
         </Grid>
         <Grid item xs={16} sm={8}>
           <Card>
-            <ConnectedTaskList />
+            <TaskList />
           </Card>
         </Grid>
       </Grid>

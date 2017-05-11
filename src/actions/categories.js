@@ -7,7 +7,7 @@ export function add(title) {
   }
 }
 
-export function addTo(title, id) {
+export function addTo(id, title) {
   return {
     type: CATEGORY_ADD_TO,
     id,
@@ -22,7 +22,7 @@ export function remove(id) {
   }
 }
 
-export function update(title, id) {
+export function update(id, title) {
   return {
     type: CATEGORY_UPDATE,
     id,

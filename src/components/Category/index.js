@@ -33,9 +33,9 @@ export default class Category extends React.Component {
 
         <div className="Category-controls">
           <ButtonGroup bsSize="xsmall">
-            <Button onClick={onAdd}><Glyphicon glyph="plus-sign"/></Button>
-            <Button onClick={onEdit}><Glyphicon glyph="edit"/></Button>
-            <Button onClick={onDelete}><Glyphicon glyph="remove"/></Button>
+            <Button onClick={() => onAdd(id)}><Glyphicon glyph="plus-sign"/></Button>
+            <Button onClick={() => onEdit(id)}><Glyphicon glyph="edit"/></Button>
+            <Button onClick={() => onDelete(id)}><Glyphicon glyph="remove"/></Button>
           </ButtonGroup>
         </div>
       </div>
