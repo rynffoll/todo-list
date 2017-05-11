@@ -1,19 +1,27 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
+import {Provider} from "react-redux";
+import {store, history} from "./store/store";
+import {Redirect, Route} from "react-router";
+import {ConnectedRouter} from 'react-router-redux';
+import HomePage from "./components/HomePage";
+import {MuiThemeProvider} from "material-ui/styles";
+import EditPage from "./components/EditPage";
 import './App.css';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <Provider store={store}>
+        <ConnectedRouter history={history}>
+          <MuiThemeProvider>
+            <div className="App">
+              <Redirect from='/' to='/category/0' />
+              <Route exact path="/category/:categoryId" component={HomePage}/>
+              <Route path="/category/:categoryId/task/:taskId/edit" component={EditPage}/>
+            </div>
+          </MuiThemeProvider>
+        </ConnectedRouter>
+      </Provider>
     );
   }
 }
