@@ -1,0 +1,27 @@
+.Category {
+  display: flex;
+  flex-flow: row wrap;
+  margin: 5px;
+  padding: 5px;
+}
+
+.Category-item {
+  display: inherit;
+  /*border: 1px solid;*/
+  padding: 5px;
+}
+
+.Category-title, .Category-title-active {
+  /*margin: 0px 10px;*/
+  padding: 0 5px;
+}
+
+.Category-title-active {
+  font-weight: bold;
+}
+
+.Category-childrens {
+  display: inherit;
+  /*width: 100%;*/
+}
+
