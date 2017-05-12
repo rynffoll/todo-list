@@ -17,7 +17,7 @@ export default class HomePage extends Component {
     pathname: this.props.location.pathname,
     search: queryString.stringify({
       done: this.searchCheckbox.checked,
-      query: this.searchInput.value
+      query: this.searchQuery.value
     })
   });
 
@@ -26,7 +26,33 @@ export default class HomePage extends Component {
     search: ""
   });
 
+  addCategory = () => {
+    this.props.categoryActions.add(this.addCategoryInput.value);
+    this.addCategoryInput.value = "";
+  };
+
+  addTask = (categoryId) => () => {
+    this.props.taskActions.add(categoryId, this.addTaskInput.value);
+    this.addTaskInput.value = "";
+  };
+
+  filter = (searchParams) => (item) => {
+    if (searchParams.done === undefined
+      && searchParams.query === undefined) {
+      return true; // ignore filter
+    } else {
+      console.log(
+        "item",
+        item, item.done === (searchParams.done === "true"),
+        item.title.includes(searchParams.query, "i")
+      );
+      return item.done === (searchParams.done === "true")
+        && item.title.includes(searchParams.query);
+    }
+  };
+
   render() {
+    console.log(this.refs);
     const {categories, tasks, categoryActions, taskActions} = this.props;
 
     const categoryId = parseInt(this.props.match.params.categoryId);
@@ -55,8 +81,8 @@ export default class HomePage extends Component {
                 </InputGroup.Addon>
                 <FormControl type="text"
                              placeholder="Search task.."
-                             inputRef={ref => this.searchInput = ref}
-                             onChange={() => setTimeout(this.search, 300)}
+                             inputRef={ref => this.searchQuery = ref}
+                             onChange={this.search}
                 />
                 <InputGroup.Addon>
                   <Glyphicon glyph="remove" onClick={this.clearSearch}/>
@@ -75,20 +101,16 @@ export default class HomePage extends Component {
             <InputGroup>
               <FormControl type="text"
                            placeholder="Category title.."
-                           inputRef={(ref) => {
-                             this.categoryInput = ref
-                           }}/>
+                           inputRef={ref => this.addCategoryInput = ref}
+              />
               <InputGroup.Button>
-                <Button onClick={() => {
-                  categoryActions.add(this.categoryInput.value);
-                  this.categoryInput.value = "";
-                }}>Add</Button>
+                <Button onClick={this.addCategory}>Add</Button>
               </InputGroup.Button>
             </InputGroup>
 
             <EditableCategoryTree roots={categories.roots}
-                          items={categories.items}
-                          actions={categoryActions}
+                                  items={categories.items}
+                                  actions={categoryActions}
             />
           </Col>
 
@@ -96,14 +118,9 @@ export default class HomePage extends Component {
             <InputGroup>
               <FormControl type="text"
                            placeholder="Task title.."
-                           inputRef={(ref) => {
-                             this.taskInput = ref
-                           }}/>
+                           inputRef={ref => this.addTaskInput}/>
               <InputGroup.Button>
-                <Button onClick={() => {
-                  taskActions.add(categoryId, this.taskInput.value);
-                  this.taskInput.value = "";
-                }}>Add</Button>
+                <Button onClick={this.addTask(categoryId)}>Add</Button>
               </InputGroup.Button>
             </InputGroup>
 
@@ -111,20 +128,7 @@ export default class HomePage extends Component {
               items={tasks.items}
               actions={taskActions}
               categoryId={categoryId}
-              filter={item => {
-                if (searchParams.done === undefined
-                  && searchParams.query === undefined) {
-                  return true; // ignore filter
-                } else {
-                  console.log(
-                    "item",
-                    item, item.done === (searchParams.done === "true"),
-                    item.title.includes(searchParams.query, "i")
-                  );
-                  return item.done === (searchParams.done === "true")
-                    && item.title.includes(searchParams.query);
-                }
-              }}
+              filter={this.filter(searchParams)}
             />
           </Col>
         </Row>

@@ -3,19 +3,12 @@ import PropTypes from 'prop-types';
 import {ControlLabel, FormControl, FormGroup, Checkbox, Button, ButtonGroup} from "react-bootstrap";
 
 export default class EditTask extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      // todo: maybe inputRef?
-      done: props.item.done
-    }
-  }
 
   createItem = () => ({
     ...this.props.item,
     title: this.titleInput.value,
-    content: this.contentInput.valuEditableCategoryTreee,
-    done: this.state.done,
+    content: this.contentInput.value,
+    done: this.doneCheckbox.checked,
   });
 
   render() {
@@ -28,12 +21,13 @@ export default class EditTask extends React.Component {
           <FormControl componentClass="input"
                        defaultValue={item.title}
                        placeholder="Task title.."
-                       inputRef={(ref) => {
-                         this.titleInput = ref
-                       }}/>
+                       inputRef={ref => this.titleInput = ref}
+          />
         </FormGroup>
 
-        <Checkbox checked={this.state.done} onChange={() => this.setState({done: !this.state.done})}>
+        <Checkbox checked={item.done}
+                  inputRef={ref => this.doneCheckbox = ref}
+        >
           Done
         </Checkbox>
 
@@ -42,9 +36,7 @@ export default class EditTask extends React.Component {
           <FormControl componentClass="textarea"
                        defaultValue={item.content}
                        placeholder="Task content.."
-                       inputRef={(ref) => {
-                         this.contentInput = ref
-                       }}/>
+                       inputRef={ref => this.contentInput = ref}/>
         </FormGroup>
 
         <ButtonGroup>
@@ -59,9 +51,5 @@ export default class EditTask extends React.Component {
 EditTask.propTypes = {
   onCancel: PropTypes.func,
   onSave: PropTypes.func,
-  category: PropTypes.number,
-  task: PropTypes.number,
-  title: PropTypes.string,
-  done: PropTypes.bool,
-  content: PropTypes.string,
+  item: PropTypes.object,
 };

@@ -7,6 +7,7 @@ import ConnectedHomePage from "./containers/ConnectedHomePage";
 import ConnectedEditPage from "./containers/ConnectedEditPage";
 import './App.css';
 
+// todo: remove redirect
 class App extends Component {
   render() {
     return (

@@ -4,6 +4,19 @@ import EditTask from "../EditTask/index";
 import {MovableCategoryTree} from "../CategoryTree";
 
 export default class EditPage extends Component {
+
+  onMove = (id) => (category) => {
+    this.props.taskActions.move(id, category);
+    this.props.history.goBack();
+  };
+
+  onSave = (item) => {
+    this.props.taskActions.edit(item);
+    this.props.history.goBack();
+  };
+
+  onCancel = () => this.props.history.goBack();
+
   render() {
     const {categories, tasks, categoryActions, taskActions} = this.props;
     const categoryId = parseInt(this.props.match.params.categoryId);
@@ -22,17 +35,13 @@ export default class EditPage extends Component {
           <Col xs={6} md={4}>
             <MovableCategoryTree roots={categories.roots}
                                  items={categories.items}
-                                 actions={categoryActions}
-                                 onMove={(category) => taskActions.move(taskId, category)}
+                                 onMove={this.onMove(taskId)}
             />
           </Col>
           <Col xs={6} md={8}>
             <EditTask item={tasks.items.find(x => x.id === taskId)}
-                      onSave={(item) => {
-                        taskActions.edit(item);
-                        this.props.history.goBack();
-                      }}
-                      onCancel={() => this.props.history.goBack()}
+                      onSave={this.onSave}
+                      onCancel={this.onCancel}
             />
           </Col>
         </Row>
