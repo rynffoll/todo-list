@@ -5,7 +5,7 @@ import MovableCategory from "./MovableCategory";
 export default class MovableCategoryTree extends React.Component {
   buildTree = (roots, items) =>
   roots && roots.map(r => {
-    const item = items.find(x => x.id == r);
+    const item = items.find(x => x.id === r);
     return <MovableCategory
       key={item.id}
       id={item.id}

@@ -8,9 +8,17 @@ function createCategory(id, title) {
 }
 
 function generateId(items) {
+  if (items === undefined || items.length === 0) return 0;
   const ids = items.map(x => x.id);
   const maxId = Math.max(...ids);
   return maxId + 1;
+}
+
+// todo: consider about removing accum arg
+function getItemsForRemoving(items, id, accum) {
+  const selectedItem = items.find(x => x.id === id);
+  selectedItem.childs && selectedItem.childs.map(x => getItemsForRemoving(items, x, accum));
+  accum.push(selectedItem.id);
 }
 
 export function categories(state = {}, action) {
@@ -31,7 +39,7 @@ export function categories(state = {}, action) {
     case CATEGORY_ADD_TO: {
       const id = generateId(state.items);
       let to = state.items.find(x => x.id === action.id);
-      to.childs = to.childs && [...to.childs, id] || [id];
+      to.childs = to.childs !== undefined ? [...to.childs, id] : [id];
       const filteredItems = state.items.filter(x => x.id !== action.id);
       return {
         ...state,
@@ -56,19 +64,21 @@ export function categories(state = {}, action) {
     }
     case CATEGORY_REMOVE: {
       const filteredRoots = state.roots.filter(x => x !== action.id);
-      const removedItems = state.items.find(x => x.id === action.id);
-      const removedIds = removedItems.childs && [...removedItems.childs, action.id] || [action.id];
-      let filteredItems = state.items.filter(x => !removedIds.includes(x.id));
-      filteredItems = filteredItems.map(x => x.childs && {
-        ...x,
-        childs: [...x.childs.filter(c => !removedIds.includes(c))]
-      } || x);
+      let itemIdsForRemoving = [];
+      getItemsForRemoving(state.items, action.id, itemIdsForRemoving);
+      const updatedFilteredItems = state.items
+        .filter(x => !itemIdsForRemoving.includes(x.id))
+        .map(x => x.childs && x.childs.includes(action.id)
+          ? {...x, childs: x.childs.filter(c => c !== action.id)}
+          : x
+        );
+
       return {
         roots: [
           ...filteredRoots
         ],
         items: [
-          ...filteredItems
+          ...updatedFilteredItems,
         ]
       };
     }

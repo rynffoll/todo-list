@@ -12,8 +12,10 @@ export default class EditableCategory extends React.Component {
     }
   }
 
+  toggleExpander = () => this.setState({expanded: !this.state.expanded});
+
   render() {
-    const {id, title, children, onAdd, onEdit, onDelete, onMove} = this.props;
+    const {id, title, children, onAdd, onEdit, onDelete} = this.props;
     const expanded = this.state.expanded;
     return <div className="Category">
 
@@ -21,7 +23,7 @@ export default class EditableCategory extends React.Component {
         {
           children && children.length > 0 &&
           <div className="Category-expander">
-            <Glyphicon onClick={() => this.setState({expanded: !expanded})} glyph={expanded ? 'menu-up' : 'menu-down'}/>
+            <Glyphicon onClick={this.toggleExpander} glyph={expanded ? 'menu-up' : 'menu-down'}/>
           </div>
         }
 

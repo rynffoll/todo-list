@@ -21,11 +21,10 @@ export default class EditPage extends Component {
   render() {
     const {
       categories, tasks,
-      categoryActions, taskActions,
       match: {params}
     } = this.props;
-    const categoryId = params.categoryId && parseInt(params.categoryId);
-    const taskId = params.taskId && parseInt(params.taskId);
+    const categoryId = params.categoryId && parseInt(params.categoryId, 10);
+    const taskId = params.taskId && parseInt(params.taskId, 10);
 
     return <div className="EditPage">
       <Grid>

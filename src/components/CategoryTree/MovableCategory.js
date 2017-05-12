@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {NavLink, Link} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 import {Button, ButtonGroup, Glyphicon} from "react-bootstrap";
 import './Category.css';
 

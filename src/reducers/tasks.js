@@ -10,6 +10,7 @@ function createTask(id, title, category, done) {
 }
 
 function generateId(items) {
+  if (items === undefined || items.length === 0) return 0;
   const ids = items.map(x => x.id);
   const maxId = Math.max(...ids);
   return maxId + 1;

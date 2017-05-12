@@ -60,7 +60,7 @@ export default class HomePage extends Component {
       match: {params}
     } = this.props;
 
-    const categoryId = params.categoryId && parseInt(params.categoryId);
+    const categoryId = params.categoryId && parseInt(params.categoryId, 10);
 
     const searchParams = queryString.parse(this.props.location.search);
 

@@ -118,7 +118,7 @@ export default class EditableCategoryTree extends React.Component {
 
   buildTree = (roots, items) =>
   roots && roots.map(r => {
-    const item = items.find(x => x.id == r);
+    const item = items.find(x => x.id === r);
     return <EditableCategory
       key={item.id}
       id={item.id}
