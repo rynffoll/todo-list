@@ -11,14 +11,12 @@ export default class EditTask extends React.Component {
     }
   }
 
-  createItem = () => {
-    return {
-      ...this.props.item,
-      title: this.titleInput.value,
-      content: this.contentInput.value,
-      done: this.state.done,
-    }
-  };
+  createItem = () => ({
+    ...this.props.item,
+    title: this.titleInput.value,
+    content: this.contentInput.valuEditableCategoryTreee,
+    done: this.state.done,
+  });
 
   render() {
     const {item, onSave, onCancel} = this.props;
@@ -30,7 +28,9 @@ export default class EditTask extends React.Component {
           <FormControl componentClass="input"
                        defaultValue={item.title}
                        placeholder="Task title.."
-                       inputRef={(ref) => {this.titleInput = ref}}/>
+                       inputRef={(ref) => {
+                         this.titleInput = ref
+                       }}/>
         </FormGroup>
 
         <Checkbox checked={this.state.done} onChange={() => this.setState({done: !this.state.done})}>
@@ -42,7 +42,9 @@ export default class EditTask extends React.Component {
           <FormControl componentClass="textarea"
                        defaultValue={item.content}
                        placeholder="Task content.."
-                       inputRef={(ref) => {this.contentInput = ref}}/>
+                       inputRef={(ref) => {
+                         this.contentInput = ref
+                       }}/>
         </FormGroup>
 
         <ButtonGroup>

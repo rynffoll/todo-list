@@ -1,14 +1,9 @@
 import React, {Component} from 'react';
-import CategoryTree from "../CategoryTree";
-import {Checkbox, Col, FormControl, Grid, ProgressBar, Row} from "react-bootstrap";
+import {Col, Grid, Row} from "react-bootstrap";
 import EditTask from "../EditTask/index";
+import {MovableCategoryTree} from "../CategoryTree";
 
 export default class EditPage extends Component {
-
-  onSave = (task) => {
-
-  };
-
   render() {
     const {categories, tasks, categoryActions, taskActions} = this.props;
     const categoryId = parseInt(this.props.match.params.categoryId);
@@ -25,9 +20,10 @@ export default class EditPage extends Component {
         </Row>
         <Row>
           <Col xs={6} md={4}>
-            <CategoryTree roots={categories.roots}
-                          items={categories.items}
-                          actions={categoryActions}
+            <MovableCategoryTree roots={categories.roots}
+                                 items={categories.items}
+                                 actions={categoryActions}
+                                 onMove={(category) => taskActions.move(taskId, category)}
             />
           </Col>
           <Col xs={6} md={8}>

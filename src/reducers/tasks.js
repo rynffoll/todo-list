@@ -1,9 +1,10 @@
-import {TASK_ADD, TASK_EDIT, TASK_TOGGLE} from "../actions/constants";
+import {TASK_ADD, TASK_EDIT, TASK_TOGGLE, TASK_MOVE} from "../actions/constants";
 
-function createTask(id, title, category) {
+function createTask(id, title, category, done) {
   return {
     id,
     title,
+    done,
     category
   }
 }
@@ -21,7 +22,7 @@ export function tasks(state = {}, action) {
       return {
         ...state,
         items: [
-          createTask(generateId(state.items), action.title, action.category),
+          createTask(generateId(state.items), action.title, action.category, false),
           ...state.items,
         ]
       }
@@ -34,7 +35,14 @@ export function tasks(state = {}, action) {
       }
     }
     case TASK_TOGGLE: {
-      const updatedItems = state.items.map(x => x.id === action.id && {...x, done: !x.done} || x);
+      const updatedItems = state.items.map(x => x.id === action.id ? {...x, done: !x.done} : x);
+      return {
+        ...state,
+        items: updatedItems
+      }
+    }
+    case TASK_MOVE: {
+      const updatedItems = state.items.map(x => x.id === action.id ? {...x, category: action.category} : x);
       return {
         ...state,
         items: updatedItems

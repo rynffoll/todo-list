@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Button, Checkbox, Col, FormControl, Grid, InputGroup, ProgressBar, Row} from "react-bootstrap";
-import CategoryTree from "../CategoryTree";
-import TaskList from "../TaskList/index";
+import {Button, Checkbox, Col, FormControl, Glyphicon, Grid, InputGroup, ProgressBar, Row} from "react-bootstrap";
 import * as queryString from 'query-string';
+import FilteredTaskList from "../FilteredTaskList";
+import {EditableCategoryTree} from "../CategoryTree";
 
 export default class HomePage extends Component {
 
@@ -13,20 +13,26 @@ export default class HomePage extends Component {
     return (filteredTasks.filter(x => x.done).length / filteredTasks.length) * 100;
   };
 
-  search = () => {
-    this.props.history.push({
-      pathname: this.props.location.pathname,
-      search: queryString.stringify({
-        done: this.searchCheckbox.checked,
-        query: this.searchInput.value
-      })
-    });
-  };
+  search = () => this.props.history.push({
+    pathname: this.props.location.pathname,
+    search: queryString.stringify({
+      done: this.searchCheckbox.checked,
+      query: this.searchInput.value
+    })
+  });
+
+  clearSearch = () => console.log(this.props) || this.props.history.push({
+    pathname: this.props.location.pathname,
+    search: ""
+  });
 
   render() {
     const {categories, tasks, categoryActions, taskActions} = this.props;
 
     const categoryId = parseInt(this.props.match.params.categoryId);
+
+    const searchParams = queryString.parse(this.props.location.search);
+    console.log(searchParams);
 
     return <div className="HomePage">
       <Grid>
@@ -52,6 +58,9 @@ export default class HomePage extends Component {
                              inputRef={ref => this.searchInput = ref}
                              onChange={() => setTimeout(this.search, 300)}
                 />
+                <InputGroup.Addon>
+                  <Glyphicon glyph="remove" onClick={this.clearSearch}/>
+                </InputGroup.Addon>
               </InputGroup>
             </div>
           </Col>
@@ -77,11 +86,12 @@ export default class HomePage extends Component {
               </InputGroup.Button>
             </InputGroup>
 
-            <CategoryTree roots={categories.roots}
+            <EditableCategoryTree roots={categories.roots}
                           items={categories.items}
                           actions={categoryActions}
             />
           </Col>
+
           <Col xs={6} md={8}>
             <InputGroup>
               <FormControl type="text"
@@ -97,9 +107,24 @@ export default class HomePage extends Component {
               </InputGroup.Button>
             </InputGroup>
 
-            <TaskList items={tasks.items}
-                      actions={taskActions}
-                      categoryId={categoryId}
+            <FilteredTaskList
+              items={tasks.items}
+              actions={taskActions}
+              categoryId={categoryId}
+              filter={item => {
+                if (searchParams.done === undefined
+                  && searchParams.query === undefined) {
+                  return true; // ignore filter
+                } else {
+                  console.log(
+                    "item",
+                    item, item.done === (searchParams.done === "true"),
+                    item.title.includes(searchParams.query, "i")
+                  );
+                  return item.done === (searchParams.done === "true")
+                    && item.title.includes(searchParams.query);
+                }
+              }}
             />
           </Col>
         </Row>

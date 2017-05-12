@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {NavLink, Link} from 'react-router-dom';
-import {Button, ButtonGroup, Collapse, Fade, Glyphicon} from "react-bootstrap";
+import {NavLink} from 'react-router-dom';
+import {Button, ButtonGroup, Collapse, Glyphicon} from "react-bootstrap";
 import './Category.css';
 
-export default class Category extends React.Component {
+export default class EditableCategory extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,7 +35,7 @@ export default class Category extends React.Component {
           <ButtonGroup bsSize="xsmall">
             <Button onClick={() => onAdd(id)}><Glyphicon glyph="plus-sign"/></Button>
             <Button onClick={() => onEdit(id)}><Glyphicon glyph="edit"/></Button>
-            <Button onClick={() => onDelete(id)}><Glyphicon glyph="remove"/></Button>
+            <Button onClick={() => onDelete(id)}><Glyphicon glyph="trash"/></Button>
           </ButtonGroup>
         </div>
       </div>
@@ -49,12 +49,11 @@ export default class Category extends React.Component {
   }
 }
 
-Category.propTypes = {
+EditableCategory.propTypes = {
   id: PropTypes.number,
   title: PropTypes.string,
   children: PropTypes.arrayOf(PropTypes.element),
   onDelete: PropTypes.func,
-  onMove: PropTypes.func,
   onEdit: PropTypes.func,
   onAdd: PropTypes.func,
 };
