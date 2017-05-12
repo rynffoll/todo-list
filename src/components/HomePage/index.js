@@ -1,11 +1,17 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Header from "../Header/index";
-import {Col, Grid, Row} from "react-bootstrap";
+import {Checkbox, Col, FormControl, Grid, ProgressBar, Row} from "react-bootstrap";
 import CategoryTree from "../CategoryTree";
 import TaskList from "../TaskList/index";
 
 export default class HomePage extends Component {
+
+  calculateProgress = (category, tasks) => {
+    // todo: move filtering by category to wrapper? or something else?
+    const filteredTasks = tasks.filter(x => x.category === category);
+    return (filteredTasks.filter(x => x.done).length / filteredTasks.length) * 100;
+  };
+
   render() {
     const {categories, tasks, categoryActions, taskActions} = this.props;
 
@@ -14,9 +20,22 @@ export default class HomePage extends Component {
     return <div className="HomePage">
       <Grid>
         <Row>
-          <Header progress={0.1}/>
-          {/*header*/}
-          {/*<LinearProgress mode="determinate" value={80}/>*/}
+          <Col xs={4} md={6}>
+            <div className="HomePage-title">
+              To-Do List
+            </div>
+          </Col>
+          <Col xs={8} md={6}>
+            <div className="HomePage-search">
+              <Checkbox inline>Show done</Checkbox>
+              <FormControl type="text" placeholder="Search query.."/>
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <div className="HomePage-progressbar">
+            <ProgressBar now={this.calculateProgress(categoryId, tasks.items)}/>
+          </div>
         </Row>
         <Row>
           <Col xs={6} md={4}>

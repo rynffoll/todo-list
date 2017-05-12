@@ -1,19 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Button, Checkbox, Glyphicon} from "react-bootstrap";
+import {Link} from "react-router-dom";
 
 export default class TaskList extends React.Component {
   render() {
-    const {items, actions} = this.props;
+    const {items, actions, categoryId} = this.props;
     return <div className="TaskList">
-      <button onClick={() => actions.add(this.props.categoryId, "123")}>Add</button>
+      <button onClick={() => actions.add(categoryId, "123")}>Add</button>
       {
-        items.filter(x => x.category === this.props.categoryId).map(x => (
+        items.filter(x => x.category === categoryId).map(x => (
           <div className="TaskList-item" key={x.id}>
             <Checkbox checked={x.done} onChange={() => actions.toggle(x.id)}/>
             {x.title}
-            <Button bsSize="xsmall" onClick={() => this.onEdit(x.id)}>
-              <Glyphicon glyph="edit"/>
+            <Button bsSize="xsmall">
+              <Link to={`/category/${categoryId}/task/${x.id}/edit`}>
+                <Glyphicon glyph="edit"/>
+              </Link>
             </Button>
           </div>
         ))

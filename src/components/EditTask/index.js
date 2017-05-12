@@ -5,37 +5,49 @@ import {ControlLabel, FormControl, FormGroup, Checkbox, Button, ButtonGroup} fro
 export default class EditTask extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      // todo: maybe inputRef?
+      done: props.item.done
+    }
   }
 
+  createItem = () => {
+    return {
+      ...this.props.item,
+      title: this.titleInput.value,
+      content: this.contentInput.value,
+      done: this.state.done,
+    }
+  };
+
   render() {
-    const {title, done, content} = this.props;
+    const {item, onSave, onCancel} = this.props;
 
     return <div className="EditTask">
       <form>
         <FormGroup controlId="taskTitle">
           <ControlLabel>Title</ControlLabel>
           <FormControl componentClass="input"
-                       defaultValue={title}
+                       defaultValue={item.title}
                        placeholder="Task title.."
                        inputRef={(ref) => {this.titleInput = ref}}/>
         </FormGroup>
 
-        <Checkbox checked={done}>Done</Checkbox>
+        <Checkbox checked={this.state.done} onChange={() => this.setState({done: !this.state.done})}>
+          Done
+        </Checkbox>
 
         <FormGroup controlId="taskContent">
           <ControlLabel>Content</ControlLabel>
           <FormControl componentClass="textarea"
-                       defaultValue={content}
+                       defaultValue={item.content}
                        placeholder="Task content.."
                        inputRef={(ref) => {this.contentInput = ref}}/>
         </FormGroup>
 
         <ButtonGroup>
-          <Button bsStyle="primary" onClick={() => {
-            console.log("title", this.titleInput.value);
-            console.log("content", this.contentInput.value);
-          }}>Save</Button>
-          <Button>Cancel</Button>
+          <Button bsStyle="primary" onClick={() => onSave(this.createItem())}>Save</Button>
+          <Button onClick={onCancel}>Cancel</Button>
         </ButtonGroup>
       </form>
     </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
+import {NavLink, Link} from 'react-router-dom';
 import {Button, ButtonGroup, Collapse, Fade, Glyphicon} from "react-bootstrap";
 import './Category.css';
 
@@ -26,9 +26,9 @@ export default class Category extends React.Component {
         }
 
         <div className="Category-title">
-          <Link to={`/category/${id}`}>
+          <NavLink activeClassName="Category-title-active" to={`/category/${id}`}>
             {title}
-          </Link>
+          </NavLink>
         </div>
 
         <div className="Category-controls">
