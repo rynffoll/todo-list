@@ -34,9 +34,9 @@ export default class EditPage extends Component {
             <EditTask item={tasks.items.find(x => x.id === taskId)}
                       onSave={(item) => {
                         taskActions.edit(item);
-                        this.props.history.push(`/category/${categoryId}`);
+                        this.props.history.goBack();
                       }}
-                      onCancel={() => this.props.history.push(`/category/${categoryId}`)}
+                      onCancel={() => this.props.history.goBack()}
             />
           </Col>
         </Row>

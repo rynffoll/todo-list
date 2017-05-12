@@ -7,17 +7,16 @@ export default class TaskList extends React.Component {
   render() {
     const {items, actions, categoryId} = this.props;
     return <div className="TaskList">
-      <button onClick={() => actions.add(categoryId, "123")}>Add</button>
       {
         items.filter(x => x.category === categoryId).map(x => (
           <div className="TaskList-item" key={x.id}>
             <Checkbox checked={x.done} onChange={() => actions.toggle(x.id)}/>
             {x.title}
-            <Button bsSize="xsmall">
-              <Link to={`/category/${categoryId}/task/${x.id}/edit`}>
+            <Link to={`/category/${categoryId}/task/${x.id}/edit`}>
+              <Button bsSize="xsmall">
                 <Glyphicon glyph="edit"/>
-              </Link>
-            </Button>
+              </Button>
+            </Link>
           </div>
         ))
       }

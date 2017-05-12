@@ -139,20 +139,7 @@ export default class CategoryTree extends React.Component {
     const tree = this.buildTree(roots, items);
 
     return <div className="CategoryTree">
-      <div className="CategoryTree-add">
-        <FormControl componentClass="input"
-                     placeholder="Category title.."
-                     inputRef={(ref) => {
-                       this.addInput = ref
-                     }}/>
-        <Button onClick={() => {
-          this.props.actions.add(this.addInput.value);
-          this.addInput.value = "";
-        }}>Add</Button>
-      </div>
-      <div className="CategoryTree-items">
-        {tree}
-      </div>
+      {tree}
 
       {this.addDialog()}
       {this.removeDialog()}
