@@ -4,6 +4,7 @@ import {Button, Checkbox, Col, FormControl, Glyphicon, Grid, InputGroup, Progres
 import * as queryString from 'query-string';
 import FilteredTaskList from "../FilteredTaskList";
 import {EditableCategoryTree} from "../CategoryTree";
+import {Link} from "react-router-dom";
 
 export default class HomePage extends Component {
 
@@ -21,7 +22,7 @@ export default class HomePage extends Component {
     })
   });
 
-  clearSearch = () => console.log(this.props) || this.props.history.push({
+  clearSearch = () => this.props.history.push({
     pathname: this.props.location.pathname,
     search: ""
   });
@@ -36,6 +37,7 @@ export default class HomePage extends Component {
     this.addTaskInput.value = "";
   };
 
+  // todo: fixme
   filter = (searchParams) => (item) => {
     if (searchParams.done === undefined
       && searchParams.query === undefined) {
@@ -52,44 +54,48 @@ export default class HomePage extends Component {
   };
 
   render() {
-    console.log(this.refs);
-    const {categories, tasks, categoryActions, taskActions} = this.props;
+    const {
+      categories, tasks,
+      categoryActions, taskActions,
+      match: {params}
+    } = this.props;
 
-    const categoryId = parseInt(this.props.match.params.categoryId);
+    const categoryId = params.categoryId && parseInt(params.categoryId);
 
     const searchParams = queryString.parse(this.props.location.search);
-    console.log(searchParams);
 
     return <div className="HomePage">
       <Grid>
         <Row>
-          <Col xs={4} md={6}>
-            <div className="HomePage-title">
-              To-Do List
-            </div>
-          </Col>
-          <Col xs={8} md={6}>
-            <div className="HomePage-search">
-              <InputGroup>
-                <InputGroup.Addon>
-                  <Checkbox inline
-                            inputRef={ref => this.searchCheckbox = ref}
-                            onChange={this.search}
-                  >
-                    Show done
-                  </Checkbox>
-                </InputGroup.Addon>
-                <FormControl type="text"
-                             placeholder="Search task.."
-                             inputRef={ref => this.searchQuery = ref}
-                             onChange={this.search}
-                />
-                <InputGroup.Addon>
-                  <Glyphicon glyph="remove" onClick={this.clearSearch}/>
-                </InputGroup.Addon>
-              </InputGroup>
-            </div>
-          </Col>
+          <div className="HomePage-header">
+            <Col xs={4} md={6}>
+              <div className="HomePage-title">
+                <Link to="/">To-Do List</Link>
+              </div>
+            </Col>
+            <Col xs={8} md={6}>
+              <div className="HomePage-search">
+                <InputGroup>
+                  <InputGroup.Addon>
+                    <Checkbox inline
+                              inputRef={ref => this.searchCheckbox = ref}
+                              onChange={this.search}
+                    >
+                      Show done
+                    </Checkbox>
+                  </InputGroup.Addon>
+                  <FormControl type="text"
+                               placeholder="Search task.."
+                               inputRef={ref => this.searchQuery = ref}
+                               onChange={this.search}
+                  />
+                  <InputGroup.Addon>
+                    <Glyphicon glyph="remove" onClick={this.clearSearch}/>
+                  </InputGroup.Addon>
+                </InputGroup>
+              </div>
+            </Col>
+          </div>
         </Row>
         <Row>
           <div className="HomePage-progressbar">
@@ -98,38 +104,45 @@ export default class HomePage extends Component {
         </Row>
         <Row>
           <Col xs={6} md={4}>
-            <InputGroup>
-              <FormControl type="text"
-                           placeholder="Category title.."
-                           inputRef={ref => this.addCategoryInput = ref}
-              />
-              <InputGroup.Button>
-                <Button onClick={this.addCategory}>Add</Button>
-              </InputGroup.Button>
-            </InputGroup>
+            <div className="HomePage-categories">
+              <InputGroup>
+                <FormControl type="text"
+                             placeholder="Category title.."
+                             inputRef={ref => this.addCategoryInput = ref}
+                />
+                <InputGroup.Button>
+                  <Button onClick={this.addCategory}>Add</Button>
+                </InputGroup.Button>
+              </InputGroup>
 
-            <EditableCategoryTree roots={categories.roots}
-                                  items={categories.items}
-                                  actions={categoryActions}
-            />
+              <EditableCategoryTree roots={categories.roots}
+                                    items={categories.items}
+                                    actions={categoryActions}
+              />
+            </div>
           </Col>
 
           <Col xs={6} md={8}>
-            <InputGroup>
-              <FormControl type="text"
-                           placeholder="Task title.."
-                           inputRef={ref => this.addTaskInput}/>
-              <InputGroup.Button>
-                <Button onClick={this.addTask(categoryId)}>Add</Button>
-              </InputGroup.Button>
-            </InputGroup>
+            {
+              categoryId !== undefined &&
+              <div className="HomePage-tasks">
+                <InputGroup>
+                  <FormControl type="text"
+                               placeholder="Task title.."
+                               inputRef={ref => this.addTaskInput}/>
+                  <InputGroup.Button>
+                    <Button onClick={this.addTask(categoryId)}>Add</Button>
+                  </InputGroup.Button>
+                </InputGroup>
 
-            <FilteredTaskList
-              items={tasks.items}
-              actions={taskActions}
-              categoryId={categoryId}
-              filter={this.filter(searchParams)}
-            />
+                <FilteredTaskList
+                  items={tasks.items}
+                  actions={taskActions}
+                  categoryId={categoryId}
+                  filter={this.filter(searchParams)}
+                />
+              </div>
+            }
           </Col>
         </Row>
       </Grid>

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Col, Grid, Row} from "react-bootstrap";
 import EditTask from "../EditTask/index";
 import {MovableCategoryTree} from "../CategoryTree";
+import {Link} from "react-router-dom";
 
 export default class EditPage extends Component {
 
@@ -18,31 +19,41 @@ export default class EditPage extends Component {
   onCancel = () => this.props.history.goBack();
 
   render() {
-    const {categories, tasks, categoryActions, taskActions} = this.props;
-    const categoryId = parseInt(this.props.match.params.categoryId);
-    const taskId = parseInt(this.props.match.params.taskId);
+    const {
+      categories, tasks,
+      categoryActions, taskActions,
+      match: {params}
+    } = this.props;
+    const categoryId = params.categoryId && parseInt(params.categoryId);
+    const taskId = params.taskId && parseInt(params.taskId);
 
     return <div className="EditPage">
       <Grid>
         <Row>
-          <Col xs={4} md={6}>
-            <div className="EditPage-title">
-              To-Do List
-            </div>
-          </Col>
+          <div className="EditPage-header">
+            <Col xs={4} md={6}>
+              <div className="EditPage-title">
+                <Link to="/">To-Do List #{taskId}</Link>
+              </div>
+            </Col>
+          </div>
         </Row>
         <Row>
           <Col xs={6} md={4}>
-            <MovableCategoryTree roots={categories.roots}
-                                 items={categories.items}
-                                 onMove={this.onMove(taskId)}
-            />
+            <div className="EditPage-categories">
+              <MovableCategoryTree roots={categories.roots}
+                                   items={categories.items}
+                                   onMove={this.onMove(taskId)}
+              />
+            </div>
           </Col>
           <Col xs={6} md={8}>
-            <EditTask item={tasks.items.find(x => x.id === taskId)}
-                      onSave={this.onSave}
-                      onCancel={this.onCancel}
-            />
+            <div className="EditPage-editor">
+              <EditTask item={tasks.items.find(x => x.id === taskId)}
+                        onSave={this.onSave}
+                        onCancel={this.onCancel}
+              />
+            </div>
           </Col>
         </Row>
       </Grid>
