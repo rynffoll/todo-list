@@ -16,8 +16,11 @@ function generateId(items) {
   return maxId + 1;
 }
 
+const initialState = {
+  items: []
+};
 
-export function tasks(state = {}, action) {
+export function tasks(state = initialState, action) {
   switch (action.type) {
     case TASK_ADD: {
       return {

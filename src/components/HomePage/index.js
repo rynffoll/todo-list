@@ -129,7 +129,7 @@ export default class HomePage extends Component {
                 <InputGroup>
                   <FormControl type="text"
                                placeholder="Task title.."
-                               inputRef={ref => this.addTaskInput}/>
+                               inputRef={ref => this.addTaskInput = ref}/>
                   <InputGroup.Button>
                     <Button onClick={this.addTask(categoryId)}>Add</Button>
                   </InputGroup.Button>

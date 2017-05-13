@@ -21,7 +21,12 @@ function getItemsForRemoving(items, id, accum) {
   accum.push(selectedItem.id);
 }
 
-export function categories(state = {}, action) {
+const initialState = {
+  roots: [],
+  items: []
+};
+
+export function categories(state = initialState, action) {
   switch (action.type) {
     case CATEGORY_ADD: {
       const id = generateId(state.items);

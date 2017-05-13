@@ -9,7 +9,3 @@ export const TASK_ADD = 'tasks/add';
 export const TASK_TOGGLE = 'tasks/done';
 export const TASK_MOVE = 'tasks/move';
 export const TASK_EDIT = 'tasks/edit';
-
-// filtering and searching
-export const FILTER = 'filter';
-export const SEARCH = 'search';

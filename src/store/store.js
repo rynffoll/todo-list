@@ -3,6 +3,7 @@ import {applyMiddleware, combineReducers, createStore} from "redux";
 import {routerReducer, routerMiddleware} from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 import {createLogger} from "redux-logger";
+import undoable from 'redux-undo';
 
 const initialState = {
   tasks: {
@@ -25,10 +26,6 @@ const initialState = {
       {id: 5, title: "Category5"},
       {id: 6, title: "Category6"},
     ]
-  },
-  search: {
-    done: false,
-    query: ""
   }
 };
 
@@ -36,10 +33,11 @@ export const history = createHistory();
 
 export const store = createStore(
   combineReducers({
-    ...reducers,
+    categories: undoable(reducers.categories),
+    tasks: undoable(reducers.tasks),
     routing: routerReducer
   }),
-  initialState,
+  // initialState,
   applyMiddleware(
     createLogger(),
     routerMiddleware(history)

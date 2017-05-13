@@ -3,16 +3,16 @@ import {tasks, categories} from '../../actions';
 import {bindActionCreators} from "redux";
 import HomePage from "../../components/HomePage";
 
-const mapToProps = (state) => ({
-  categories: state.categories,
-  tasks: state.tasks,
+const mapStateToProps = (state) => ({
+  categories: state.categories.present,
+  tasks: state.tasks.present,
 });
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = (dispatch) => ({
   categoryActions: bindActionCreators(categories, dispatch),
   taskActions: bindActionCreators(tasks, dispatch),
 });
 
-const ConnectedHomePage = connect(mapToProps, mapDispatchToProps)(HomePage);
+const ConnectedHomePage = connect(mapStateToProps, mapDispatchToProps)(HomePage);
 
 export default ConnectedHomePage;
