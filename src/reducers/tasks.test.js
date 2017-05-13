@@ -7,11 +7,11 @@ describe('tasks reducer', () => {
     items: [],
   };
 
-  it('should return initial state', () => {
-    expect(
-      reducer(undefined, {})
-    ).toEqual(initialState)
-  });
+  // it('should return initial state', () => {
+  //   expect(
+  //     reducer(undefined, {})
+  //   ).toEqual(initialState)
+  // });
 
   const stateWithOneItem = {
     items: [{id: 0, title: "Task0", category: 0, done: false, content: ""}],

@@ -18,7 +18,13 @@ function generateId(items) {
 }
 
 const initialState = {
-  items: []
+  items: [
+    {id: 0, title: "Task0", content: "Taks0 Content", done: false, category: 0},
+    {id: 1, title: "Task1", content: "Taks1 Content", done: true, category: 0},
+    {id: 2, title: "Task2", content: "Taks2 Content", done: false, category: 0},
+    {id: 3, title: "Task3", content: "Taks3 Content", done: false, category: 1},
+    {id: 4, title: "Task4", content: "Taks4 Content", done: false, category: 1},
+  ]
 };
 
 export function tasks(state = initialState, action) {

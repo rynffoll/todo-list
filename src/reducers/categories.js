@@ -23,8 +23,16 @@ function getItemsForRemoving(items, id, accum) {
 }
 
 const initialState = {
-  roots: [],
-  items: []
+  roots: [0],
+  items: [
+    {id: 0, title: "Category0", childs: [1, 2, 3]},
+    {id: 1, title: "Category1", childs: []},
+    {id: 2, title: "Category2", childs: [4]},
+    {id: 3, title: "Category3"},
+    {id: 4, title: "Category4", childs: [5, 6]},
+    {id: 5, title: "Category5"},
+    {id: 6, title: "Category6"},
+  ]
 };
 
 export function categories(state = initialState, action) {
