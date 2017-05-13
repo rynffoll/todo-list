@@ -5,7 +5,7 @@ import {Route} from "react-router";
 import {ConnectedRouter} from 'react-router-redux';
 import ConnectedHomePage from "./containers/ConnectedHomePage";
 import ConnectedEditPage from "./containers/ConnectedEditPage";
-import ConnectedUndoRedo from "./containers/ConnectedUndoRedo/index";
+import ConnectedUndoRedo from "./containers/ConnectedUndoRedo";
 import './App.css';
 
 class App extends Component {

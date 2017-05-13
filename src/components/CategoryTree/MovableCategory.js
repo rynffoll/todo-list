@@ -11,8 +11,11 @@ export default class MovableCategory extends React.Component {
     return <div className="Category">
 
       <div className="Category-item">
-         <div className="Category-title">
-          <NavLink activeClassName="Category-title-active" to={`/category/${id}`}>
+        <div className="Category-title">
+          <NavLink activeClassName="Category-active-link"
+                   to={`/category/${id}`}
+                   exact={false}
+          >
             {title}
           </NavLink>
         </div>

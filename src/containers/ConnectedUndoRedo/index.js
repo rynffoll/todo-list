@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 import {ActionCreators} from 'redux-undo';
-import UndoRedo from "../../components/UndoRedo/index";
+import {UndoRedo} from "../../components/UndoRedo";
 
 const mapStateToProps = (state) => ({});
 

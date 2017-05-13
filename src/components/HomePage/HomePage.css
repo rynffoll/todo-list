@@ -1,0 +1,15 @@
+.HomePage {
+
+}
+
+.HomePage-header {
+  height: 50px;
+}
+
+.HomePage-title {
+  font-size: 24px;
+}
+
+.HomePage-progress {
+  margin: 5px auto;
+}

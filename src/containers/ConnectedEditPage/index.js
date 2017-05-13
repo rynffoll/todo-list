@@ -1,7 +1,7 @@
 import {connect} from "react-redux";
 import {tasks, categories} from '../../actions';
 import {bindActionCreators} from "redux";
-import EditPage from "../../components/EditPage";
+import {EditPage} from "../../components/EditPage";
 
 const mapStateToProps = (state) => ({
   categories: state.categories.present,

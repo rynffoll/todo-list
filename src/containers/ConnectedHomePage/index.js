@@ -1,7 +1,7 @@
 import {connect} from "react-redux";
 import {tasks, categories} from '../../actions';
 import {bindActionCreators} from "redux";
-import HomePage from "../../components/HomePage";
+import {HomePage} from "../../components/HomePage";
 
 const mapStateToProps = (state) => ({
   categories: state.categories.present,

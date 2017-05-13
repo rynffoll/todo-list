@@ -1,0 +1,19 @@
+.Task {
+  position: relative;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-content: center;
+  padding: 10px 5px;
+  margin: 5px;
+}
+
+.Task-status {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.Task-title {
+  margin-left: 15px;
+}

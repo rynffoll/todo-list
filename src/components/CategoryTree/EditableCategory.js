@@ -23,12 +23,16 @@ export default class EditableCategory extends React.Component {
         {
           children && children.length > 0 &&
           <div className="Category-expander">
-            <Glyphicon onClick={this.toggleExpander} glyph={expanded ? 'menu-up' : 'menu-down'}/>
+            <Glyphicon onClick={this.toggleExpander}
+                       glyph={expanded ? 'triangle-top' : 'triangle-bottom'}
+            />
           </div>
         }
 
         <div className="Category-title">
-          <NavLink activeClassName="Category-title-active" to={`/category/${id}`}>
+          <NavLink exact
+                   activeClassName="Category-active-link"
+                   to={`/category/${id}`}>
             {title}
           </NavLink>
         </div>

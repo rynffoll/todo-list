@@ -28,7 +28,7 @@ export default class EditableCategoryTree extends React.Component {
       </Modal.Header>
 
       <Modal.Body>
-        Remove {this.state.selectedCategory}?
+        Remove #{this.state.selectedCategory}?
       </Modal.Body>
 
       <Modal.Footer>
@@ -57,7 +57,7 @@ export default class EditableCategoryTree extends React.Component {
       </Modal.Header>
 
       <Modal.Body>
-        Add to {this.state.selectedCategory}
+        Add to #{this.state.selectedCategory}
         <FormControl componentClass="input"
                      placeholder="Category title.."
                      inputRef={(ref) => {
@@ -92,7 +92,7 @@ export default class EditableCategoryTree extends React.Component {
       </Modal.Header>
 
       <Modal.Body>
-        Add to {this.state.selectedCategory}
+        Edit #{this.state.selectedCategory}
         <FormControl componentClass="input"
                      defaultValue={this.props.items.find(x => x.id === this.state.selectedCategory).title}
                      placeholder="Category title.."
