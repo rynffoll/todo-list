@@ -1,4 +1,4 @@
-import {TASK_ADD, TASK_TOGGLE, TASK_MOVE, TASK_EDIT} from "./constants";
+import {TASK_ADD, TASK_TOGGLE, TASK_MOVE, TASK_UPDATE} from "./constants";
 
 export function add(category, title) {
   return {
@@ -15,9 +15,9 @@ export function toggle(id) {
   }
 }
 
-export function edit(item) {
+export function update(item) {
   return {
-    type: TASK_EDIT,
+    type: TASK_UPDATE,
     item
   }
 }

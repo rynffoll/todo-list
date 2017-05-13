@@ -8,4 +8,4 @@ export const CATEGORY_UPDATE = 'categories/update';
 export const TASK_ADD = 'tasks/add';
 export const TASK_TOGGLE = 'tasks/done';
 export const TASK_MOVE = 'tasks/move';
-export const TASK_EDIT = 'tasks/edit';
+export const TASK_UPDATE = 'tasks/update';

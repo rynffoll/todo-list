@@ -3,7 +3,8 @@ import {CATEGORY_ADD, CATEGORY_ADD_TO, CATEGORY_REMOVE, CATEGORY_UPDATE} from ".
 function createCategory(id, title) {
   return {
     id,
-    title
+    title,
+    childs: []
   }
 }
 
@@ -43,21 +44,25 @@ export function categories(state = initialState, action) {
     }
     case CATEGORY_ADD_TO: {
       const id = generateId(state.items);
-      let to = state.items.find(x => x.id === action.id);
-      to.childs = to.childs !== undefined ? [...to.childs, id] : [id];
+      const to = state.items.find(x => x.id === action.id);
+      const updatedItem = to.childs !== undefined
+        ? {...to, childs: [...to.childs, id]}
+        : {...to, childs: [id]};
       const filteredItems = state.items.filter(x => x.id !== action.id);
       return {
         ...state,
         items: [
           ...filteredItems,
-          to,
+          updatedItem,
           createCategory(id, action.title),
         ]
       };
     }
     case CATEGORY_UPDATE: {
-      let updatedItem = state.items.find(x => x.id === action.id);
-      updatedItem.title = action.title;
+      const item = state.items.find(x => x.id === action.id);
+      const updatedItem = item.title === action.title
+        ? item
+        : {...item, title: action.title};
       const filteredItems = state.items.filter(x => x.id !== action.id);
       return {
         ...state,
